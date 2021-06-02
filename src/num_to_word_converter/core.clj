@@ -25,18 +25,37 @@
 (def multiples-of-ten
   [" "
    " "
-   "twenty"
-   "thirty"
-   "fourty"
-   "fifty"
-   "sixty"
-   "seventy"
-   "eighty"
-   "ninety"])
+   "twenty "
+   "thirty "
+   "fourty "
+   "fifty "
+   "sixty "
+   "seventy "
+   "eighty "
+   "ninety "])
 
-(defn convert-number-to-word
+(defn num->digits [num]
+  (->> (str num)
+       seq
+       (map str)
+       (map read-string)
+       count))
+
+(defn number-to-words [num]
+  (if (> num 19)
+    (str (get multiples-of-ten (quot num 10))
+         (get single-numbers (rem num 10)))
+    (get single-numbers num)))
+
+(defn convert-number-to-words
   [num]
-  (if (<= num 19)
-    (get single-numbers num)
-    (str (get multiples-of-ten (quot num 10)) 
-         (get single-numbers (rem num 10)))))
+  (let [number-count (num->digits num)]
+    (case number-count
+      (or 1 2) (number-to-words num)
+      3  (str (get single-numbers (quot num 100))
+              " hundred and "
+              (number-to-words (rem num 100)))
+      4  (str (get single-numbers (quot num 1000))
+              " thousand "
+              (number-to-words (rem num 1000))))))
+
