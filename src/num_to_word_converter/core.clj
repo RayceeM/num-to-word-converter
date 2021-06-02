@@ -1,5 +1,4 @@
-(ns num-to-word-converter.core
-  (:require [clojure.edn :as edn]))
+(ns num-to-word-converter.core)
 
 (def single-numbers
   {1 "one"
@@ -34,28 +33,43 @@
    "eighty "
    "ninety "])
 
-(defn num->digits [num]
+(defn num->digits-count
+  "Converts a number to a digit and gives the count"
+  [num]
   (->> (str num)
        seq
        (map str)
        (map read-string)
        count))
 
-(defn number-to-words [num]
+(defn get-quotient [{:keys [number divisor remainder]}]
+  (if divisor
+    (quot number divisor)
+    (rem num remainder)))
+
+(defn number-to-words
+  "Divide number if greater than nineteen"
+  [num]
   (if (> num 19)
-    (str (get multiples-of-ten (quot num 10))
-         (get single-numbers (rem num 10)))
+    (str (get multiples-of-ten (get-quotient  {:number num
+                                               :divisor 10}))
+         (get single-numbers (get-quotient  {:number num
+                                             :reminder 10})))
     (get single-numbers num)))
 
 (defn convert-number-to-words
   [num]
-  (let [number-count (num->digits num)]
+  (let [number-count (num->digits-count num)]
     (case number-count
       (or 1 2) (number-to-words num)
-      3  (str (get single-numbers (quot num 100))
+      3  (str (get single-numbers (get-quotient {:number num
+                                                 :divisor 100}))
               " hundred and "
-              (number-to-words (rem num 100)))
-      4  (str (get single-numbers (quot num 1000))
+              (number-to-words (get-quotient  {:number num
+                                               :reminder 100})))
+      4  (str (get single-numbers (get-quotient {:number num
+                                                 :divisor 1000}))
               " thousand "
-              (number-to-words (rem num 1000))))))
+              (number-to-words  (get-quotient {:number num
+                                               :reminder 1000}))))))
 
