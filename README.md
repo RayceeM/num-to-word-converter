@@ -1,36 +1,31 @@
 # num-to-word-converter
 
-FIXME: description
+An application that converts a number into words
 
-## Installation
+## Development mode
+To quickly get started run:
+`lein run`
 
-Download from http://example.com/FIXME.
+Alternatively, bundle up your project and all its dependencies in a single executable jar  with the following command:
+`lein uberjar`
 
-## Usage
-
-FIXME: explanation
-
+then run the `java -jar` command:
     $ java -jar num-to-word-converter-0.1.0-standalone.jar [args]
 
-## Options
+### Testing 
+Run tests with the following command:
+`lein test`
 
-FIXME: listing of options this app accepts.
+## Bugs
+- Any number above four digits doesn't get converted correctly.
 
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+## To-d0
+- Change to use a loop instead.
+- COnvert numStrings to numbers.
+- Test cases
 
 ## License
-
-Copyright © 2021 FIXME
+Copyright © 2021
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
