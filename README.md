@@ -7,10 +7,13 @@ To quickly get started run:
 `lein run`
 
 Alternatively, bundle up your project and all its dependencies in a single executable jar  with the following command:
+
 `lein uberjar`
 
 then run the `java -jar` command:
-    $ java -jar num-to-word-converter-0.1.0-standalone.jar [args]
+```
+ java -jar num-to-word-converter-0.1.0-standalone.jar [args]
+```
 
 ### Testing 
 Run tests with the following command:
@@ -19,7 +22,7 @@ Run tests with the following command:
 ## Bugs
 - Any number above four digits doesn't get converted correctly.
 
-## To-d0
+## To-do
 - Change to use a loop instead.
 - COnvert numStrings to numbers.
 - Test cases
