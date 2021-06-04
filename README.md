@@ -23,9 +23,9 @@ Run tests with the following command:
 - Any number above four digits doesn't get converted correctly.
 
 ## To-do
-- Change to use a loop instead.
-- COnvert numStrings to numbers.
-- Test cases
+- [ ] Change to use a loop instead.
+- [x] Convert numStrings to numbers.
+- [ ] Test cases
 
 ## License
 Copyright © 2021
