@@ -26,12 +26,17 @@
    " "
    "twenty "
    "thirty "
-   "fourty "
+   "forty "
    "fifty "
    "sixty "
    "seventy "
    "eighty "
    "ninety "])
+
+(def greater-multiples ["thousand "
+                        "million "
+                        "billion"
+                        "trillion "])
 
 (defn num->digits-count
   "Converts a number to a digit and gives the count"
@@ -56,7 +61,7 @@
     (str (get multiples-of-ten (get-quotient {:number num
                                               :divisor 10}))
          (get single-numbers (get-quotient {:number num
-                                             :remainder 10})))
+                                            :remainder 10})))
     (get single-numbers num)))
 
 (defn convert-number-to-words
@@ -69,8 +74,23 @@
               " hundred and "
               (number-to-words (get-quotient  {:number num
                                                :remainder 100})))
-      4  (str (get single-numbers (get-quotient {:number num
-                                                 :divisor 1000}))
-              " thousand "
-              (number-to-words  (get-quotient {:number num
-                                               :remainder 1000}))))))
+      (loop [word []
+             num num
+             multiple -1]
+        (if (zero? num)
+          (apply str word)
+          (let [whole-num (get-quotient {:number num
+                                         :remainder 1000})
+                num (get-quotient {:number num
+                                   :divisor 1000})
+                word (if (zero? whole-num)
+                       word
+                       (let [num->word (convert-number-to-words whole-num)]
+                         (cons
+                          (if (neg? multiple)
+                            (if (< whole-num 100)
+                              (str "and " num->word)
+                              num->word)
+                            (str num->word " " (greater-multiples multiple)))
+                          word)))]
+            (recur word num (inc multiple))))))))
