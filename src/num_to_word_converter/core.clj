@@ -5,4 +5,5 @@
 
 (defn -main
   [& args]
-  (println (convert-number-to-words args) ))
+  (doseq [num-string args]
+    (println (convert-number-to-words (Integer/parseInt num-string)))))
