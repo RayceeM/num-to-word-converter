@@ -1,7 +1,8 @@
 (ns num-to-word-converter.num-to-word)
 
 (def single-numbers
-  {1 "one"
+  {0 "zero"
+   1 "one"
    2 "two"
    3 "three"
    4 "four"
@@ -60,8 +61,10 @@
   (if (> num 19)
     (str (get multiples-of-ten (get-quotient {:number num
                                               :divisor 10}))
-         (get single-numbers (get-quotient {:number num
-                                            :remainder 10})))
+         (when-not (= 0  (get-quotient {:number num
+                                        :remainder 10}))
+           (get single-numbers (get-quotient {:number num
+                                              :remainder 10}))))
     (get single-numbers num)))
 
 (defn convert-number-to-words
@@ -71,24 +74,27 @@
       (or 1 2) (number-to-words num)
       3  (str (get single-numbers (get-quotient {:number num
                                                  :divisor 100}))
-              " hundred and "
-              (number-to-words (get-quotient  {:number num
-                                               :remainder 100})))
+              " hundred "
+              (when-not (= 0 (get-quotient {:number num
+                                             :remainder 100}))
+                (str "and "
+                     (number-to-words (get-quotient  {:number num
+                                                      :remainder 100})))))
       (loop [word []
              num num
              multiple -1]
         (if (zero? num)
           (apply str word)
-          (let [whole-num (get-quotient {:number num
-                                         :remainder 1000})
+          (let [reminder-num (get-quotient {:number num
+                                            :remainder 1000})
                 num (get-quotient {:number num
                                    :divisor 1000})
-                word (if (zero? whole-num)
-                       word
-                       (let [num->word (convert-number-to-words whole-num)]
+                word (if (zero? reminder-num)
+                       word ;; return empy vector if number is zero
+                       (let [num->word (convert-number-to-words reminder-num)]
                          (cons
                           (if (neg? multiple)
-                            (if (< whole-num 100)
+                            (if (< reminder-num 100)
                               (str "and " num->word)
                               num->word)
                             (str num->word " " (greater-multiples multiple)))

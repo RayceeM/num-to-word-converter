@@ -1,9 +1,11 @@
 (ns num-to-word-converter.num-to-word-test
   (:require [clojure.test :refer :all]
-            [num-to-word-converter.num-to-word :refer [convert-number-to-words]]))
+            [num-to-word-converter.num-to-word :refer
+             [convert-number-to-words]]))
 
 (deftest single-digit-test
   (testing "returns single digits words"
+    (is (= "zero" (convert-number-to-words 0)))
     (is (= "one" (convert-number-to-words 1)))))
 
 (deftest double-digit-number-test
@@ -22,5 +24,9 @@
 
 (deftest greater-than-four-digit-number-test
   (testing "returns greater than four digits words"
-    (is (= "fifty six million nine hundred and forty five thousand seven hundred and eighty one" (convert-number-to-words 56945781)))
-    (is (= "nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" (convert-number-to-words 999999999)))))
+    (is (= (str "fifty six million nine hundred and forty five thousand"
+                " seven hundred and eighty one")
+           (convert-number-to-words 56945781)))
+    (is (= (str "nine hundred and ninety nine million nine hundred"
+                " and ninety nine thousand nine hundred and ninety nine")
+           (convert-number-to-words 999999999)))))
