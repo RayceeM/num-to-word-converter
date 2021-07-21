@@ -6,4 +6,6 @@
 (defn -main
   [& args]
   (doseq [num-string args]
-    (println (convert-number-to-words (Integer/parseInt num-string)))))
+    (try
+      (println (convert-number-to-words (Integer/parseInt num-string)))
+      (catch Exception e (println "not a valid number:" num-string)))))
