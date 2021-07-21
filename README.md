@@ -12,7 +12,7 @@ Alternatively, bundle up your project and all its dependencies in a single execu
 
 then run the `java -jar` command:
 ```
- java -jar num-to-word-converter-0.1.0-standalone.jar [args]
+ java -jar num-to-word-converter-0.1.0-standalone.jar <args>
 ```
 
 ### Testing 
@@ -23,9 +23,9 @@ Run tests with the following command:
 - Any number above four digits doesn't get converted correctly.
 
 ## To-do
-- [ ] Change to use a loop instead.
+- [x] Change to use a loop instead.
 - [x] Convert numStrings to numbers.
-- [ ] Test cases
+- [x] Test cases
 
 ## License
 Copyright © 2021
